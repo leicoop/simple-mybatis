@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="test.dao.AccountMapper">
+
+	<select id="getAccount" resultType="test.bean.Account">
+		select * from account where id = #{id}
+	</select>
+	
+	<select id="getAll" resultType="test.bean.Account">
+		select * from account
+	</select>
+	
+	<update id="updateAccount" paramType = "test.bean.Account">
+		update account set balance = #{balance} ,username = #{username} where id = #{id}
+	</update>
+
+	<insert id="insertAccount" paramType = "test.bean.Account">
+		insert into account(id,username,balance) values (#{id}, #{username}, #{balance})
+	</insert>
+
+	<delete id="deleteAccount">
+		delete  from account where id = #{id}
+	</delete>
+	
+</mapper>
