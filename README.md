@@ -20,7 +20,7 @@ As a developer who wants to gain insight into design patterns and OOP rules, I d
 [![TFStkF.png](https://s4.ax1x.com/2021/12/17/TFStkF.png)](https://imgtu.com/i/TFStkF)
 
 **Note:**<br>
-The red texts illustrate the method called by the user to use this framework<br>
+The red texts illustrate the method invoked by the user<br>
 The blue Classes are core elements in this framework
 
 * * *
