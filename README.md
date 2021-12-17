@@ -20,8 +20,8 @@ As a developer who wants to gain insight into design patterns and OOP rules, I d
 [![TFStkF.png](https://s4.ax1x.com/2021/12/17/TFStkF.png)](https://imgtu.com/i/TFStkF)
 
 **Note:**<br>
-The red texts illustrate the method invoked by the user<br>
-The blue Classes are core elements in this framework
+The red texts illustrate the methods invoked by users<br>
+The Classes marked as blue are core elements in this framework
 
 * * *
 
@@ -39,13 +39,17 @@ Note:
 Three columns must be defined if you just want to take advantage of this demo without any code work
 [![TidgT1.png](https://s4.ax1x.com/2021/12/17/TidgT1.png)](https://imgtu.com/i/TidgT1)
 
- open project in your device and step into TestClass where unit test methods have been created
+3.  open project in your device and step into TestClass where unit test methods have been created
   [![TidcwR.png](https://s4.ax1x.com/2021/12/17/TidcwR.png)](https://imgtu.com/i/TidcwR)
     
-3.  invoke test methods in order
+4.  invoke test methods in order<br>
+  [![TFCNtS.png](https://s4.ax1x.com/2021/12/17/TFCNtS.png)](https://imgtu.com/i/TFCNtS)<br>
+  
+  
+  
     
 * * *
-- [ ] To use this framework in java applications, you want to do the following four steps
+- [ ] To use this framework in java applications, you want to do the following four steps(take update as a sample)
     
 
 1.  get the sqlsessionfactory instance<br>
@@ -61,11 +65,13 @@ Three columns must be defined if you just want to take advantage of this demo wi
     
 4.  invoke methods defined in the interface<br>
     **mapper.updateAccount(new Account(1,"mike",300.00));**<br>
-
+    
+    
+[![TFCIn1.png](https://s4.ax1x.com/2021/12/17/TFCIn1.png)](https://imgtu.com/i/TFCIn1)
 
 * * *
 
-- [ ] If you want to implement a transaction, you may need to practice some changes based on the previous 4-steps
+- [ ] If you want to implement a transaction, you may need to practice some changes based on the previous 4-steps(take updates as a sample)
 
 1.  get the sqlsessionfactory instance(same as previous)<br>
     
@@ -86,10 +92,16 @@ Three columns must be defined if you just want to take advantage of this demo wi
     session.close();<br>
     }**<br>
     
-
+[![TFCo0x.png](https://s4.ax1x.com/2021/12/17/TFCo0x.png)](https://imgtu.com/i/TFCo0x)
 * * *
 
+**Reference && acknowledgement**<br>
+This project is based on an existing project demo submitted by @SeasonPanPan, and this demo gave me an insight and understanding of how a framework worked.<br>
+As an entry-level SDE, only limited work has been done with referring to the design of MyBatis3 and demo as I mentioned. <br>
+However, the knowledge and experience I gained are intangible.<br>
 
+Refered project link:https://github.com/SeasonPanPan/minimybatis<br>
+* * *
 
 **License**
 MIT © Lei
