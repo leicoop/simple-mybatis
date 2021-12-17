@@ -1,4 +1,4 @@
-**Simply Mybatis**
+# Simply Mybatis
 
 **Introduction**
 This is a mini-version of Mybatis which brings most core features of a real Mybatis .
@@ -17,11 +17,11 @@ As a developer who wants to gain insight into design patterns and OOP rules, I d
 * * *
 **Project Structure**
 
-![p1.drawio.png](../_resources/p1.drawio.png)
+[![TidYes.png](https://s4.ax1x.com/2021/12/17/TidYes.png)](https://imgtu.com/i/TidYes)
 
-**Note:**
-The ==red== texts illustrate the method called by the user to use this framework
-The ==blue== Classes are core elements in this framework
+**Note:**<br>
+The red texts illustrate the method called by the user to use this framework<br>
+The blue Classes are core elements in this framework
 
 * * *
 
@@ -37,10 +37,10 @@ The ==blue== Classes are core elements in this framework
 
 Note:
 Three columns must be defined if you just want to take advantage of this demo without any code work
-![34ea6c30f368c2c4cadb5244905cfef0.png](../_resources/34ea6c30f368c2c4cadb5244905cfef0.png)
+[![TidgT1.png](https://s4.ax1x.com/2021/12/17/TidgT1.png)](https://imgtu.com/i/TidgT1)
 
  open project in your device and step into TestClass where unit test methods have been created
-    ![e4284747052b2d3fd5e570eb816b89ba.png](../_resources/e4284747052b2d3fd5e570eb816b89ba.png)
+  [![TidcwR.png](https://s4.ax1x.com/2021/12/17/TidcwR.png)](https://imgtu.com/i/TidcwR)
     
 3.  invoke test methods in order
     
@@ -48,43 +48,43 @@ Three columns must be defined if you just want to take advantage of this demo wi
 - [ ] To use this framework in java applications, you want to do the following four steps
     
 
-1.  get the sqlsessionfactory instance
+1.  get the sqlsessionfactory instance<br>
     
-    **SqlSessionFactory factory = new SqlSessionFactoryBuilder().build("conf.properties");**
-    **Ps**:conf.properties is a property file containing database connection info and your mapper.xml location
+    **SqlSessionFactory factory = new SqlSessionFactoryBuilder().build("conf.properties");**<br>
+    **Ps**:conf.properties is a property file containing database connection info and your mapper.xml location<br>
     
-2.  get the session instance
-    **SqlSession session = factory.openSession();**
+2.  get the session instance<br>
+    **SqlSession session = factory.openSession();**<br>
     
-3.  get the proxy instance of your interface
-    **AccountMapper mapper = session.getMapper(AccountMapper.class);**
+3.  get the proxy instance of your interface<br>
+    **AccountMapper mapper = session.getMapper(AccountMapper.class);**<br>
     
-4.  invoke methods defined in the interface
-    **mapper.updateAccount(new Account(1,"mike",300.00));**
+4.  invoke methods defined in the interface<br>
+    **mapper.updateAccount(new Account(1,"mike",300.00));**<br>
 
 
 * * *
 
 - [ ] If you want to implement a transaction, you may need to practice some changes based on the previous 4-steps
 
-1.  get the sqlsessionfactory instance(same as previous)
+1.  get the sqlsessionfactory instance(same as previous)<br>
     
-2.  get the session instance with setting transaction on
-    **SqlSession session = factory.openSession(true);**
+2.  get the session instance with setting transaction on<br>
+    **SqlSession session = factory.openSession(true);**<br>
     
-3.  get the proxy instance of your interface(same as previous)
+3.  get the proxy instance of your interface(same as previous)<br>
     
-4.  wrap codes with try-catch-finnally and pratice manual commit,rollback and close
-    **try{
-    mapper.updateAccount(new Account(1,"mike",100.00));
-    mapper.updateAccount(new Account(1,"mike",99.99));
-    session.commit();
-    }
-    catch (Exception e){
-    session.rollback();
-    }finally {
-    session.close();
-    }**
+4.  wrap codes with try-catch-finnally and pratice manual commit,rollback and close<br>
+    **try{<br>
+    mapper.updateAccount(new Account(1,"mike",100.00));<br>
+    mapper.updateAccount(new Account(1,"mike",99.99));<br>
+    session.commit();<br>
+    }<br>
+    catch (Exception e){<br>
+    session.rollback();<br>
+    }finally {<br>
+    session.close();<br>
+    }**<br>
     
 
 * * *
