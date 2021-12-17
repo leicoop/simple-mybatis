@@ -1,10 +1,10 @@
 # Simply Mybatis
 
-**Introduction**
+**Introduction**<br>
 This is a mini-version of Mybatis which brings most core features of a real Mybatis .
 It is a study demo, but it also imported design patterns and concepts shown in the original Mybatis.
 
-**Background**
+**Background**<br>
 As a developer who wants to gain insight into design patterns and OOP rules, I decided to implement a Mybatis framework widely used in J2EE applications. The basic structure and workflow come from Mybatis3 and I also draw lessons from an open-source project in which only partial functions are achieved. To make the project functional and meet the minimum requirements of CRUD, some codes were added and modifications were conducted.
 
 **key features**
