@@ -95,7 +95,7 @@ Three columns must be defined if you just want to take advantage of this demo wi
 [![TFCo0x.png](https://s4.ax1x.com/2021/12/17/TFCo0x.png)](https://imgtu.com/i/TFCo0x)
 * * *
 
-**Reference && acknowledgement**<br>
+**Reference && Acknowledgement**<br>
 This project is based on an existing project demo submitted by @SeasonPanPan, and this demo gave me an insight and understanding of how a framework worked.<br>
 As an entry-level SDE, only limited work has been done with referring to the design of MyBatis3 and demo as I mentioned. <br>
 However, the knowledge and experience I gained are intangible.<br>
