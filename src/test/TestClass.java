@@ -57,18 +57,6 @@ public class TestClass {
     }
 
     @Test
-    public void testDelete() {
-
-        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build("config.properties");
-        SqlSession session = factory.openSession();
-        AccountMapper mapper = session.getMapper(AccountMapper.class);
-
-        mapper.deleteAccount(1);
-        session.close();
-
-    }
-
-    @Test
     public void testTransaction() {
 
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build("config.properties");
@@ -89,7 +77,6 @@ public class TestClass {
 
 
     }
-
 
     @Test
     public void testLocalCache() {
@@ -123,7 +110,6 @@ public class TestClass {
 
 
     }
-
 
     @Test
     public void testSecondLevelCache() {
@@ -167,5 +153,15 @@ public class TestClass {
         sessionB.close();
     }
 
+    @Test
+    public void testDelete() {
 
+        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build("config.properties");
+        SqlSession session = factory.openSession();
+        AccountMapper mapper = session.getMapper(AccountMapper.class);
+
+        mapper.deleteAccount(1);
+        session.close();
+
+    }
 }
