@@ -15,9 +15,9 @@ As a developer who wants to gain insight into design patterns and OOP rules, I d
 - implement the processing of resultset
 - implement the basic CRUD operations
 * * *
-**Project Structure（From my understanding）**
+**Application Workflow（with first and second level cache）**
 
-[![TFStkF.png](https://s4.ax1x.com/2021/12/17/TFStkF.png)](https://imgtu.com/i/TFStkF)
+[![T76GFK.png](https://s4.ax1x.com/2022/01/03/T76GFK.png)](https://imgtu.com/i/T76GFK)
 
 **Note:**<br>
 The red texts illustrate the methods invoked by users<br>
