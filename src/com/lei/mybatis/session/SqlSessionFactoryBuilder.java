@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.lei.mybatis.session;
 
@@ -16,8 +16,7 @@ import java.io.InputStream;
  * @author lei
  * @description class of SqlSessionFactoryBuilder
  */
-public class SqlSessionFactoryBuilder
-{
+public class SqlSessionFactoryBuilder {
 
 
     /***
@@ -27,34 +26,30 @@ public class SqlSessionFactoryBuilder
      * @param fileName
      * @return com.lei.mybatis.session.sqlsessionfactory.SqlSessionFactory
      */
-    public SqlSessionFactory build(String fileName)
-    {
+    public SqlSessionFactory build(String fileName) {
 
         InputStream inputStream = SqlSessionFactoryBuilder.class.getClassLoader().getResourceAsStream(fileName);
 
         return build(inputStream);
     }
 
-   /***
-    * @author lei
-    * @description override method which read elements of conf.properties into configuration and produce instance of sqlsessionfactory
-    * @param
-    * @param inputStream
-    * @return com.lei.mybatis.session.sqlsessionfactory.SqlSessionFactory
-    */
-    public SqlSessionFactory build(InputStream inputStream)
-    {
-        try
-        {
+    /***
+     * @author lei
+     * @description override method which read elements of conf.properties into configuration and produce instance of sqlsessionfactory
+     * @param
+     * @param inputStream
+     * @return com.lei.mybatis.session.sqlsessionfactory.SqlSessionFactory
+     */
+    public SqlSessionFactory build(InputStream inputStream) {
+        try {
 
 
             Configuration.PROPS.load(inputStream);
 
-        }
-        catch (IOException e)
-        {
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return new DefaultSqlSessionFactory( Configuration.getInstance());
+        return new DefaultSqlSessionFactory(Configuration.getInstance());
     }
 }

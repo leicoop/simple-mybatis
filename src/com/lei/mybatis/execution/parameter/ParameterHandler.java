@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.lei.mybatis.execution.parameter;
 
@@ -7,9 +7,7 @@ package com.lei.mybatis.execution.parameter;
 import java.sql.PreparedStatement;
 
 
-
-public interface ParameterHandler
-{
+public interface ParameterHandler {
 
 
     void setParameters(PreparedStatement paramPreparedStatement);

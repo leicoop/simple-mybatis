@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.lei.mybatis.execution.statement;
 
@@ -20,16 +20,14 @@ import java.util.regex.Pattern;
  * @author lei
  * @description statementhandler class
  */
-public class SimpleStatementHandler implements StatementHandler
-{
+public class SimpleStatementHandler implements StatementHandler {
     //defines regex pattern
     private static Pattern param_pattern = Pattern.compile("#\\{([^\\{\\}]*)\\}");
 
     private MappedStatement mappedStatement;
 
 
-    public SimpleStatementHandler(MappedStatement mappedStatement)
-    {
+    public SimpleStatementHandler(MappedStatement mappedStatement) {
         this.mappedStatement = mappedStatement;
     }
 
@@ -43,19 +41,15 @@ public class SimpleStatementHandler implements StatementHandler
      */
     @Override
     public PreparedStatement prepare(Connection connection)
-        throws SQLException
-    {
+            throws SQLException {
         String originalSql = mappedStatement.getSql();
 
-        if (CommonUtis.isNotEmpty(originalSql))
-        {
+        if (CommonUtis.isNotEmpty(originalSql)) {
 
 
             // replace #{} to ?
             return connection.prepareStatement(parseSymbol(originalSql));
-        }
-        else
-        {
+        } else {
             throw new SQLException("original sql is null.");
         }
     }
@@ -69,8 +63,7 @@ public class SimpleStatementHandler implements StatementHandler
      * @return java.sql.ResultSet
      */
     @Override
-    public ResultSet query(PreparedStatement preparedStatement) throws SQLException
-    {
+    public ResultSet query(PreparedStatement preparedStatement) throws SQLException {
         return preparedStatement.executeQuery();
     }
 
@@ -83,11 +76,9 @@ public class SimpleStatementHandler implements StatementHandler
      */
     @Override
     public void update(PreparedStatement preparedStatement)
-        throws SQLException
-    {
+            throws SQLException {
         preparedStatement.executeUpdate();
     }
-
 
 
     /***
@@ -115,15 +106,14 @@ public class SimpleStatementHandler implements StatementHandler
         preparedStatement.execute();
     }
 
-  /***
-   * @author lei
-   * @description process sql string with replacing all params to ?
-   * @param
-   * @param source
-   * @return java.lang.String
-   */
-    private static String parseSymbol(String source)
-    {
+    /***
+     * @author lei
+     * @description process sql string with replacing all params to ?
+     * @param
+     * @param source
+     * @return java.lang.String
+     */
+    private static String parseSymbol(String source) {
         source = source.trim();
         Matcher matcher = param_pattern.matcher(source);
         return matcher.replaceAll("?");

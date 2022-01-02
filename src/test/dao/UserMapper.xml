@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mapper namespace="test.dao.AccountMapper">
+<mapper namespace="test.dao.AccountMapper" cache = "true">
 
 	<select id="getAccount" resultType="test.bean.Account">
 		select * from account where id = #{id}
@@ -20,5 +20,6 @@
 	<delete id="deleteAccount">
 		delete  from account where id = #{id}
 	</delete>
-	
+
+
 </mapper>

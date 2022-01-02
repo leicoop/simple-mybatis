@@ -1,17 +1,17 @@
 /**
- * 
+ *
  */
 package com.lei.mybatis.mapping;
 
+import com.lei.mybatis.cache.Cache;
 import com.lei.mybatis.constants.Constant;
 
 
-/***
+/**
  * @author lei
  * @description class of mappedstatement
  */
-public final class MappedStatement
-{
+public final class MappedStatement {
 
     //namespace in xml
     private String namespace;
@@ -32,6 +32,22 @@ public final class MappedStatement
     //paramtype
     private String parameterType;
 
+
+    /**
+     * Cache is owned by each statement privately; In this way, cache is binding to each namespace
+     */
+    private Cache cache;
+
+    private boolean isFlushCacheRequired;
+
+    public Cache getCache() {
+        return cache;
+    }
+
+    public void setCache(Cache cache) {
+        this.cache = cache;
+    }
+
     public String getParameterType() {
         return parameterType;
     }
@@ -43,85 +59,71 @@ public final class MappedStatement
     /**
      * @return the namespace
      */
-    public String getNamespace()
-    {
+    public String getNamespace() {
         return namespace;
     }
 
     /**
-     * @param namespace
-     *            the namespace to set
+     * @param namespace the namespace to set
      */
-    public void setNamespace(String namespace)
-    {
+    public void setNamespace(String namespace) {
         this.namespace = namespace;
     }
 
     /**
      * @return the sqlId
      */
-    public String getSqlId()
-    {
+    public String getSqlId() {
         return sqlId;
     }
 
     /**
-     * @param sqlId
-     *            the sqlId to set
+     * @param sqlId the sqlId to set
      */
-    public void setSqlId(String sqlId)
-    {
+    public void setSqlId(String sqlId) {
         this.sqlId = sqlId;
     }
 
     /**
      * @return the sql
      */
-    public String getSql()
-    {
+    public String getSql() {
         return sql;
     }
 
     /**
-     * @param sql
-     *            the sql to set
+     * @param sql the sql to set
      */
-    public void setSql(String sql)
-    {
+    public void setSql(String sql) {
         this.sql = sql;
     }
 
     /**
      * @return the resultType
      */
-    public String getResultType()
-    {
+    public String getResultType() {
         return resultType;
     }
 
     /**
-     * @param resultType
-     *            the resultType to set
+     * @param resultType the resultType to set
      */
-    public void setResultType(String resultType)
-    {
+    public void setResultType(String resultType) {
         this.resultType = resultType;
     }
 
-    
+
     /**
      * @return Returns the sqlCommandType.
      */
-    public Constant.SqlType getSqlCommandType()
-    {
+    public Constant.SqlType getSqlCommandType() {
         return sqlCommandType;
     }
 
     /**
      * @param sqlCommandType The sqlCommandType to set.
      */
-    public void setSqlCommandType(Constant.SqlType sqlCommandType)
-    {
+    public void setSqlCommandType(Constant.SqlType sqlCommandType) {
         this.sqlCommandType = sqlCommandType;
     }
 
@@ -140,5 +142,13 @@ public final class MappedStatement
                 ", sqlCommandType=" + sqlCommandType +
                 ", parameterType='" + parameterType + '\'' +
                 '}';
+    }
+
+    public boolean isFlushCacheRequired() {
+        return this.isFlushCacheRequired;
+    }
+
+    public void setFlushCacheRequired(boolean flushCacheRequired) {
+        isFlushCacheRequired = flushCacheRequired;
     }
 }

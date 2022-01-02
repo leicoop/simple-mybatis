@@ -1,18 +1,17 @@
 package com.lei.mybatis.transaction;
 
-import java.sql.Connection;
 
 /***
  * @author lei
  * @description class of transactionfactory
  */
-public class DefaultTransactionFactory implements TransactionFactory{
+public class DefaultTransactionFactory implements TransactionFactory {
 
 
-    private final Connection connection;
+    boolean enableTranscation;
 
-    public DefaultTransactionFactory(Connection connection){
-        this.connection =connection;
+    public DefaultTransactionFactory(boolean enableTranscation) {
+        this.enableTranscation = enableTranscation;
     }
 
     /***
@@ -22,6 +21,6 @@ public class DefaultTransactionFactory implements TransactionFactory{
      * @return com.lei.mybatis.transaction.Transaction
      */
     public Transaction newInstance() {
-        return new DefaultTransaction(this.connection);
+        return new DefaultTransaction(enableTranscation);
     }
 }

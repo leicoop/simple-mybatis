@@ -1,10 +1,10 @@
 /**
- * 
+ *
  */
 package com.lei.mybatis.utils;
 
 
-
+import com.lei.mybatis.cache.DefaultCache;
 import com.lei.mybatis.constants.Constant;
 import com.lei.mybatis.mapping.MappedStatement;
 import com.lei.mybatis.session.Configuration;
@@ -22,8 +22,7 @@ import java.util.List;
  * @author lei
  * @description class of utils used to parse xml files
  */
-public final class XmlUtil
-{
+public final class XmlUtil {
 
 
     /***
@@ -34,16 +33,14 @@ public final class XmlUtil
      * @param configuration
      * @return void
      */
-    public static void readMapperXml(File fileName, Configuration configuration)
-    {
+    public static void readMapperXml(File fileName, Configuration configuration) {
 
-        try
-        {
+        try {
 
             // get instance of reader
             SAXReader saxReader = new SAXReader();
             saxReader.setEncoding(Constant.CHARSET_UTF8);
-            
+
             // execute reading and return a document instance
             Document document = saxReader.read(fileName);
 
@@ -51,64 +48,68 @@ public final class XmlUtil
             Element rootElement = document.getRootElement();
 
             // if the suffix of this doc is not "xml"
-            if (!Constant.XML_ROOT_LABEL.equals(rootElement.getName()))
-            {
+            if (!Constant.XML_ROOT_LABEL.equals(rootElement.getName())) {
                 System.err.println("only xml file can be read!");
                 return;
             }
             //get namespace of doc
             String namespace = rootElement.attributeValue(Constant.XML_SELECT_NAMESPACE);
 
-            //generate a list to store statments
-            List<MappedStatement> statements = new ArrayList<>();
+            //get cache info
+            String cache = rootElement.attributeValue(Constant.XML_CACHE);
+
 
             //iterate each section
-            for (Iterator iterator = rootElement.elementIterator(); iterator.hasNext();)
-            {
+            for (Iterator iterator = rootElement.elementIterator(); iterator.hasNext(); ) {
 
-                Element element = (Element)iterator.next();
+                Element element = (Element) iterator.next();
 
                 //get name of operation
                 String eleName = element.getName();
 
+
                 //produce a instance of statement
                 MappedStatement statement = new MappedStatement();
 
+
                 //match operation type and put info into statement entity
-                if (Constant.SqlType.SELECT.value().equals(eleName))
-                {
+                if (Constant.SqlType.SELECT.value().equals(eleName)) {
                     String resultType = element.attributeValue(Constant.XML_SELECT_RESULTTYPE);
                     statement.setResultType(resultType);
                     statement.setSqlCommandType(Constant.SqlType.SELECT);
-                }
-                else if (Constant.SqlType.UPDATE.value().equals(eleName))
-                {
+
+                } else if (Constant.SqlType.UPDATE.value().equals(eleName)) {
                     String paramType = element.attributeValue(Constant.XML_SELECT_PARAMTYPE);
                     statement.setSqlCommandType(Constant.SqlType.UPDATE);
                     statement.setParameterType(paramType);
-                }
-                else if(Constant.SqlType.INSERT.value().equals(eleName))
-                {
+                } else if (Constant.SqlType.INSERT.value().equals(eleName)) {
                     String paramType = element.attributeValue(Constant.XML_SELECT_PARAMTYPE);
-                      statement.setSqlCommandType(Constant.SqlType.INSERT);
+                    statement.setSqlCommandType(Constant.SqlType.INSERT);
                     statement.setParameterType(paramType);
-                }
-                else if(Constant.SqlType.DELETE.value().equals(eleName))
-                {
-                         statement.setSqlCommandType(Constant.SqlType.DELETE);
+                } else if (Constant.SqlType.DELETE.value().equals(eleName)) {
+                    statement.setSqlCommandType(Constant.SqlType.DELETE);
                 }
 
                 //generate sqlId as unique identification of each statement entity in which contains all info of operation
                 String sqlId = namespace + "." + element.attributeValue(Constant.XML_ELEMENT_ID);
 
+                // open level-2 cache in statement
+                if (
+                        eleName.equals(Constant.SqlType.SELECT.value())
+                                && null != cache
+                                && cache.equals("true")) {
+
+                    statement.setFlushCacheRequired(false);
+                    statement.setCache(new DefaultCache(sqlId));
+
+                }
+
+
                 //inject all info
                 statement.setSqlId(sqlId);
                 statement.setNamespace(namespace);
                 statement.setSql(CommonUtis.stringTrim(element.getStringValue()));
-                statements.add(statement);
 
-
-                System.out.println(statement);
 
                 //put sqlid and statement into configuration
                 configuration.addMappedStatement(sqlId, statement);
@@ -117,9 +118,7 @@ public final class XmlUtil
                 configuration.addMapper(Class.forName(namespace));
             }
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

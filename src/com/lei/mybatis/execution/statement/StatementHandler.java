@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.lei.mybatis.execution.statement;
 
@@ -10,9 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-
-public interface StatementHandler
-{
+public interface StatementHandler {
 
 
     PreparedStatement prepare(Connection paramConnection) throws SQLException;
