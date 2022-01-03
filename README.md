@@ -5,102 +5,341 @@ This is a mini-version of Mybatis which brings most core features of a real Myba
 It is a study demo, but it also imported design patterns and concepts shown in the original Mybatis.
 
 **Background**<br>
-As a developer who wants to gain insight into design patterns and OOP rules, I decided to implement a Mybatis framework widely used in J2EE applications. The basic structure and workflow come from Mybatis3 and I also draw lessons from an open-source project in which only partial functions are achieved. To make the project functional and meet the minimum requirements of CRUD, some codes were added and modifications were conducted.
+As a developer who wants to gain insight into design patterns and OOP rules, I decided to learn in practice by implementing a simple version of Mybatis which is widely used in J2EE applications. The basic structure and workflow come from Mybatis3 and I also draw lessons from open-source projects. 
 
-**key features**
+**Key features**
 
-- implement the binding between the interface and the XML file
-- implement the non-primitive type parameter processing
-- implement the wrapper of the original transaction
-- implement the processing of resultset
-- implement the basic CRUD operations
+- Implemented the binding between the interface and the XML file
+- Implemented the non-primitive type parameter processing
+- Implemented the transaction 
+- Implemented the processing of resultset
+- Implemented the basic CRUD operations
+- Implemented the two-level cache: localchche and transactionalcache
 * * *
-**Application Workflow（with first and second level cache）**
+**Project Structure**
+
+````java
+|-- src
+    |-- config.properties 
+    |-- com
+    |   |-- lei
+    |       |-- mybatis
+    |           |-- binding 
+    |           |   |-- MapperProxy.java
+    |           |   |-- MapperProxyFactory.java
+    |           |   |-- MapperRegistry.java 
+    |           |-- cache
+    |           |   |-- Cache.java
+    |           |   |-- CacheKey.java
+    |           |   |-- DefaultCache.java
+    |           |   |-- TransactionalCacheManager.java
+    |           |   |-- decorator
+    |           |       |-- TransactionalCache.java
+    |           |-- constants
+    |           |   |-- Constant.java
+    |           |-- execution
+    |           |   |-- executor
+    |           |   |   |-- Executor.java
+    |           |   |   |-- SimpleExecutor.java
+    |           |   |   |-- decorator
+    |           |   |       |-- CachingExecutor.java
+    |           |   |-- parameter
+    |           |   |   |-- DefaultParameterHandler.java
+    |           |   |   |-- ParameterHandler.java
+    |           |   |-- resultset
+    |           |   |   |-- DefaultResultSetHandler.java
+    |           |   |   |-- ResultSetHandler.java
+    |           |   |-- statement
+    |           |       |-- SimpleStatementHandler.java
+    |           |       |-- StatementHandler.java
+    |           |-- mapping
+    |           |   |-- MappedStatement.java
+    |           |-- session
+    |           |   |-- Configuration.java
+    |           |   |-- SqlSessionFactoryBuilder.java
+    |           |   |-- sqlsession
+    |           |   |   |-- DefaultSqlSession.java
+    |           |   |   |-- SqlSession.java
+    |           |   |-- sqlsessionfactory
+    |           |       |-- DefaultSqlSessionFactory.java
+    |           |       |-- SqlSessionFactory.java
+    |           |-- transaction
+    |           |   |-- DefaultTransaction.java
+    |           |   |-- DefaultTransactionFactory.java
+    |           |   |-- Transaction.java
+    |           |   |-- TransactionFactory.java
+    |           |-- utils
+    |               |-- CommonUtis.java
+    |               |-- XmlUtil.java
+    |-- test
+        |-- TestClass.java 
+        |-- bean
+        |   |-- Account.java
+        |-- dao
+            |-- AccountMapper.java
+            |-- UserMapper.xml
+````
+
+***
+
+
+
+**Workflow（with first and second level cache）**
 
 [![T76GFK.png](https://s4.ax1x.com/2022/01/03/T76GFK.png)](https://imgtu.com/i/T76GFK)
 
-**Note:**<br>
-The red texts illustrate the methods invoked by users<br>
-The Classes marked as blue are core elements in this framework
+**Explainations:**<br>
+The red lines illustrate the workflow of a query operation and numbers assigned showing sequence<br>
+The classes highlighted as blue are core elements in this framework
 
 * * *
 
-**Usage**
-
-- [ ] To achieve CRUD demonstration, you can follow below steps
+**Demo**
+For demonstration, you can follow below steps
     
- 
-1. download the code
+1. clone the code
     
-2.  create a table named account in a database named test in MySql
+2.  create a table named account in a database named test in MySql databse
     
 
-Note:
-Three columns must be defined if you just want to take advantage of this demo without any code work
+**Note**:
+Three columns must be defined if you only want to implement this demo without any coding
 [![TidgT1.png](https://s4.ax1x.com/2021/12/17/TidgT1.png)](https://imgtu.com/i/TidgT1)
 
-3.  open project in your device and step into TestClass where unit test methods have been created
-  [![TidcwR.png](https://s4.ax1x.com/2021/12/17/TidcwR.png)](https://imgtu.com/i/TidcwR)
+3.  open project in your device and step into testclass where unit tests have been claimed
     
-4.  invoke test methods in order<br>
-  [![TFCNtS.png](https://s4.ax1x.com/2021/12/17/TFCNtS.png)](https://imgtu.com/i/TFCNtS)<br>
+4.  run test methods in order<br>
+ [![T766fS.png](https://s4.ax1x.com/2022/01/03/T766fS.png)](https://imgtu.com/i/T766fS)<br>
   
   
   
     
 * * *
-- [ ] To use this framework in java applications, you want to do the following four steps(take update as a sample)
-    
 
-1.  get the sqlsessionfactory instance<br>
+**Quick Start**
+
+To achieve basic CRUD by this framework in java applications, you want to do the following five steps(take update as a sample)
+    	
+	
+ ````java
+         /**
+         * Get the sqlsessionfactory instance
+         */
+        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build("config.properties");
+
+        /**
+         * Get the session instance
+         */
+
+        SqlSession session = factory.openSession();
+
+        /**
+         * Get the proxy instance of interface
+         */
+
+        AccountMapper mapper = session.getMapper(AccountMapper.class);
+
+        /**
+         *  Invoke methods defined in the interface
+         */
+
+        mapper.updateAccount(new Account(1, "mike", 300.00));
+
+        /**
+         * Close connection
+         */
+
+        session.close();
+
+````
+	
+* * *
+
+**Use Transaction**
+
+ If you want to add transaction, you may need to practice some changes based on the previous 5-steps(also take update as a sample)
+
     
-    **SqlSessionFactory factory = new SqlSessionFactoryBuilder().build("conf.properties");**<br>
-    **Ps**:conf.properties is a property file containing database connection info and your mapper.xml location<br>
-    
-2.  get the session instance<br>
-    **SqlSession session = factory.openSession();**<br>
-    
-3.  get the proxy instance of your interface<br>
-    **AccountMapper mapper = session.getMapper(AccountMapper.class);**<br>
-    
-4.  invoke methods defined in the interface<br>
-    **mapper.updateAccount(new Account(1,"mike",300.00));**<br>
-    
-    
-[![TFCIn1.png](https://s4.ax1x.com/2021/12/17/TFCIn1.png)](https://imgtu.com/i/TFCIn1)
+````java
+        /**
+         * Get the sqlsessionfactory instance
+         */
+        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build("config.properties");
+
+        /**
+         * Get the session instance and set transaction on
+         */
+        SqlSession session = factory.openSession(true);
+
+        /**
+         * Get the proxy instance of interface
+         */
+        AccountMapper mapper = session.getMapper(AccountMapper.class);
+
+        /**
+         * Wrap with try-catch-finally block
+         */
+        try {
+            mapper.updateAccount(new Account(1, "mike", 100.00));
+            /**
+             * Imitate an exception 
+             */
+            int i = 1 / 0;
+            mapper.updateAccount(new Account(1, "mike", 99.99));
+
+            /**
+             * Commit transaction
+             */
+            session.commit();
+        } catch (Exception e) {
+            /**
+             * RollBack upon exception 
+             */
+            session.rollback();
+        } finally {
+            /**
+             * close connection anyway
+             */
+            session.close();
+        }
+````
+	
+	
+* * *
+**Local Cache(First Level Cache)**
+
+LocalCache is always on, like Mybatis3, no settings could be done to active or disable it. 
+As long as practice same select operations in the same session, the result will be same.
+
+```java
+        /**
+         * Get the sqlsessionfactory instance
+         */
+        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build("config.properties");
+
+        /**
+         * Get the session instance
+         */
+        SqlSession session = factory.openSession();
+
+        /**
+         * Get the proxy instance A of interface
+         */
+        AccountMapper mapperA = session.getMapper(AccountMapper.class);
+
+        /**
+         * Get the proxy instance B of interface
+         */
+        AccountMapper mapperB = session.getMapper(AccountMapper.class);
+
+        /**
+         *  Query all account(s) in the first time
+         */
+        List<Account> firstQueryResult = mapperA.getAll();
+        for (Account account : firstQueryResult) {
+            System.out.println(account);
+        }
+
+        /**
+         * Query all account(s) in the second time
+         */
+        List<Account> secondQueryResult = mapperB.getAll();
+        for (Account account : secondQueryResult) {
+            System.out.println(account);
+        }
+
+        /**
+         * close session
+         */
+        session.close();
+````
+
+
+
 
 * * *
 
-- [ ] If you want to implement a transaction, you may need to practice some changes based on the previous 4-steps(take updates as a sample)
+**Transactional Cache(Second Level Cache)**
 
-1.  get the sqlsessionfactory instance(same as previous)<br>
-    
-2.  get the session instance with setting transaction on<br>
-    **SqlSession session = factory.openSession(true);**<br>
-    
-3.  get the proxy instance of your interface(same as previous)<br>
-    
-4.  wrap codes with try-catch-finnally and pratice manual commit,rollback and close<br>
-    **try{<br>
-    mapper.updateAccount(new Account(1,"mike",100.00));<br>
-    mapper.updateAccount(new Account(1,"mike",99.99));<br>
-    session.commit();<br>
-    }<br>
-    catch (Exception e){<br>
-    session.rollback();<br>
-    }finally {<br>
-    session.close();<br>
-    }**<br>
-    
-[![TFCo0x.png](https://s4.ax1x.com/2021/12/17/TFCo0x.png)](https://imgtu.com/i/TFCo0x)
+To avtive this level cache, two steps should be done firstly.
+
+Step 1:
+In config.properties file, add key-value property: ''cache=true''.
+````java
+cache=true
+````
+
+Step 2:
+
+In mapper.xml file, add property in the mapper lable:"cache = true"
+
+````java
+<mapper namespace="test.dao.AccountMapper" cache = "true">
+
+````
+
+````java
+        /**
+         * Get the sqlsessionfactory instance
+         */
+        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build("config.properties");
+
+        /**
+         * Get sessionA
+         */
+        SqlSession sessionA = factory.openSession();
+
+        /**
+         * Get sessionB
+         */
+        SqlSession sessionB = factory.openSession();
+
+        /**
+         * Get mapperA from sessionA
+         */
+        AccountMapper mapperA = sessionA.getMapper(AccountMapper.class);
+
+        /**
+         * Get mapperB from sessionB
+         */
+        AccountMapper mapperB = sessionB.getMapper(AccountMapper.class);
+
+        /**
+         * Query all account(s) in the first time 
+         */
+        List<Account> firstQueryResult = mapperA.getAll();
+        for (Account account : firstQueryResult) {
+            System.out.println(account);
+        }
+
+        /**
+         * Close sessionA to make cache available
+         */
+        sessionA.close();
+
+        /**
+         * Query all account(s) in the second time
+         */
+        List<Account> secondQueryResult = mapperB.getAll();
+        for (Account account : secondQueryResult) {
+            System.out.println(account);
+        }
+
+        /**
+         * Close sessionB
+         */
+        sessionB.close();
+````
+
 * * *
 
-**Reference && Acknowledgement**<br>
-This project is based on an existing project demo submitted by @SeasonPanPan, and this demo gave me an insight and understanding of how a framework worked.<br>
-As an entry-level SDE, only limited work has been done with referring to the design of MyBatis3 and demo as I mentioned. <br>
-However, the knowledge and experience I gained are intangible.<br>
+**Reference**<br>
+This project is inspired by a project posted by @SeasonPanPan in Github, and the project gave me an insight and understanding of how a persistance layer framework worked.
+As an entry-level SDE, some work has been done and some new features are added into this project with referring to the design of MyBatis3. 
 
-Refered project link:https://github.com/SeasonPanPan/minimybatis<br>
+Refered project link:
+Mybatis3: https://github.com/mybatis/mybatis-3<br>
+Refered project :https://github.com/SeasonPanPan/minimybatis<br>
 * * *
 
 **License**
