@@ -94,7 +94,7 @@ The classes highlighted as blue are core elements in this framework
 
 * * *
 
-**Demo**
+**Demo:**<br>
 For demonstration, you can follow below steps
     
 1. clone the code
