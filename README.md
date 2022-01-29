@@ -88,7 +88,7 @@ As a developer who wants to gain insight into design patterns and OOP rules, I d
 
 [![T76GFK.png](https://s4.ax1x.com/2022/01/03/T76GFK.png)](https://imgtu.com/i/T76GFK)
 
-**Explainations:**<br>
+**Explaination:**<br>
 The red lines illustrate the workflow of a query operation and numbers assigned showing sequence<br>
 The classes highlighted as blue are core elements in this framework
 
