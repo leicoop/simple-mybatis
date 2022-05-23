@@ -10,8 +10,7 @@ As a developer who wants to gain insight into design patterns and OOP rules, I d
 **Key features**
 
 - Implemented the binding between the interface and the XML file
-- Implemented the non-primitive type parameter processing
-- Implemented the transaction 
+- Implemented the non-primitive type parameter processing 
 - Implemented the processing of resultset
 - Implemented the basic CRUD operations
 - Implemented the two-level cache: localchche and transactionalcache
